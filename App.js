@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import CodePush from "react-native-code-push";
+import CodePush from "react-native-code-push-v2";
 
 class App extends Component<{}> {
   constructor() {
@@ -70,7 +70,13 @@ class App extends Component<{}> {
   /** Update is downloaded silently, and applied on restart (recommended) */
   sync() {
     CodePush.sync(
-      {},
+      {
+        extraInfo: {              // 额外参数
+          "foo": "bar",
+          "bar": "foo",
+          "back": "ground"
+        }
+      },
       this.codePushStatusDidChange.bind(this),
       this.codePushDownloadDidProgress.bind(this)
     );
@@ -79,7 +85,13 @@ class App extends Component<{}> {
   /** Update pops a confirmation dialog, and then immediately reboots the app */
   syncImmediate() {
     CodePush.sync(
-      { installMode: CodePush.InstallMode.IMMEDIATE, updateDialog: true },
+      { installMode: CodePush.InstallMode.IMMEDIATE, updateDialog: true,
+        extraInfo: {              // 额外参数
+          "foo": "bar",
+          "bar": "foo",
+          "dialog": "driven"
+        }
+      },
       this.codePushStatusDidChange.bind(this),
       this.codePushDownloadDidProgress.bind(this)
     );
